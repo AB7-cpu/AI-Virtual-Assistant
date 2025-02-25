@@ -66,3 +66,27 @@ class VirtualAssistant:
             return intent, max_prob
 
         return None, max_prob
+    
+    def execute_intent_action(self, intent):
+        """Execute actions associated with the identified intent"""
+        if intent not in self.intents:
+            return f"No actions defined for intent: {intent}"
+            
+        # Here you would implement the actual logic for each action
+        # This is a placeholder that returns the action list
+        return f"Executing actions for intent '{intent}': {self.intents[intent]}"
+    
+    def get_llm_response(self, user_input, context=''):
+        """Get response from local LLM when no intent is matched"""
+
+        prompt = ChatPromptTemplate.from_template(template)
+
+        model = OllamaLLM(model='gemma2:2b')
+
+        chain = prompt | model
+        try:
+            response = chain.invoke({"context": context, "question": user_input})
+            return response
+
+        except Exception as e:
+            return f"Error getting LLM response: {str(e)}"
